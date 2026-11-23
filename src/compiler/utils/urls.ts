@@ -7,6 +7,11 @@ export function resolveAssetUrl(
   return `${base}/assets/brands/${brandId}/${file}`
 }
 
+export function resolveDecorationUrl(assetBaseUrl: string, brandId: string, file: string): string {
+  const base = assetBaseUrl.replace(/\/$/, '')
+  return `${base}/assets/brands/${brandId}/decorations/${file}`
+}
+
 export function resolveIconAssetUrl(
   assetBaseUrl: string,
   variant: string,

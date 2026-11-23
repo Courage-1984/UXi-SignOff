@@ -6,6 +6,11 @@ export type TemplateId =
   | 'accent-sidebar'
   | 'header-strip'
   | 'dual-visual'
+  | 'panel-split'
+  | 'headshot-affiliate'
+  | 'logo-promo-stack'
+  | 'conference-hero'
+  | 'partner-showcase'
 
 export type BlockId = 'identity' | 'cta' | 'social' | 'banner' | 'legal'
 

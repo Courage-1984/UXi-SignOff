@@ -26,6 +26,11 @@ const TEMPLATES: TemplateId[] = [
   'accent-sidebar',
   'header-strip',
   'dual-visual',
+  'panel-split',
+  'headshot-affiliate',
+  'logo-promo-stack',
+  'conference-hero',
+  'partner-showcase',
 ]
 
 const FLOWS: PrimaryFlow[] = ['row', 'row-reverse', 'column', 'column-reverse']
@@ -106,5 +111,40 @@ describe('compileSignatureHtml', () => {
     state.legal.showDivider = true
     const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
     expect(html).toMatch(/font-size:\s*11px/)
+  })
+
+  it('panel-split uses panel background when decoration present', () => {
+    const { state, brand } = sampleState('ref-amc-panel', 'panel-split')
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('decorations/panel-left.png')
+    expect(html).toContain('bgcolor="#15803d"')
+  })
+
+  it('headshot-affiliate uses prefix labels', () => {
+    const { state, brand } = sampleState('ref-affiliate', 'headshot-affiliate')
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('w:')
+    expect(html).toContain('e:')
+    expect(html).toContain('affiliate-cta.png')
+  })
+
+  it('logo-promo-stack renders accent name and banner', () => {
+    const { state, brand } = sampleState('ref-promo-stack', 'logo-promo-stack')
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('event-promo.png')
+    expect(html).toMatch(/#c2185b/i)
+  })
+
+  it('conference-hero renders hero decoration', () => {
+    const { state, brand } = sampleState('ref-conference-hero', 'conference-hero')
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('decorations/conference-hero.png')
+  })
+
+  it('partner-showcase renders partner strip', () => {
+    const { state, brand } = sampleState('ref-partner-showcase', 'partner-showcase')
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('decorations/partner-strip.png')
+    expect(html).toContain('decorations/side-accent.png')
   })
 })

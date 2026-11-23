@@ -64,7 +64,7 @@ export function LogoControls({ brand, state, onChange }: Props) {
             <option value="rounded-box">Rounded box</option>
           </select>
         </label>
-        {state.templateId === 'dual-visual' && (
+        {(state.templateId === 'dual-visual' || state.templateId === 'headshot-affiliate') && (
           <>
             <label className="flex items-center gap-2 text-sm text-ctp-text">
               <input

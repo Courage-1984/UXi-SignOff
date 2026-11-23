@@ -6,6 +6,13 @@ import { renderLogo } from '../logo'
 import { renderPrimaryLayout, wrapOuterSignature } from '../layout/flowTable'
 import { inlineStyle, presentationTable } from '../utils/html'
 import type { TemplateId } from '../../types/signature'
+import {
+  renderConferenceHero,
+  renderHeadshotAffiliate,
+  renderLogoPromoStack,
+  renderPanelSplit,
+  renderPartnerShowcase,
+} from './inspirationTemplates'
 
 function blocksOnly(ctx: CompileContext, ids: Array<'identity' | 'cta' | 'social' | 'banner' | 'legal'>) {
   return {
@@ -20,7 +27,7 @@ function blocksOnly(ctx: CompileContext, ids: Array<'identity' | 'cta' | 'social
 function renderLogoSlot(ctx: CompileContext): string {
   const head = renderHeadshot(ctx)
   const logo = renderLogo(ctx)
-  if (ctx.state.templateId === 'dual-visual' && head) {
+  if ((ctx.state.templateId === 'dual-visual' || ctx.state.templateId === 'headshot-affiliate') && head) {
     return `${presentationTable()}<tr><td valign="middle" style="vertical-align:middle;">${head}</td><td valign="middle" style="vertical-align:middle;">${logo}</td></tr></table>`
   }
   return head + logo
@@ -45,6 +52,12 @@ function renderHeaderStripBand(ctx: CompileContext): string {
 }
 
 export function renderTemplate(ctx: CompileContext, templateId: TemplateId): string {
+  if (templateId === 'panel-split') return renderPanelSplit(ctx)
+  if (templateId === 'headshot-affiliate') return renderHeadshotAffiliate(ctx)
+  if (templateId === 'logo-promo-stack') return renderLogoPromoStack(ctx)
+  if (templateId === 'conference-hero') return renderConferenceHero(ctx)
+  if (templateId === 'partner-showcase') return renderPartnerShowcase(ctx)
+
   const body = renderEnabledBlocks(ctx)
 
   if (templateId === 'executive-card') {

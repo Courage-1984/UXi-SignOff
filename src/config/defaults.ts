@@ -1,6 +1,6 @@
 import type { BrandConfig } from '../types/brand'
 import type { BlockConfig, SignatureFormState, TemplateId } from '../types/signature'
-import { getTemplatePreset } from './templatePresets'
+import { applyPresetBlocks, getTemplatePreset } from './templatePresets'
 
 export const DEFAULT_BLOCKS: BlockConfig[] = [
   { id: 'identity', enabled: true },
@@ -39,7 +39,10 @@ export function createDefaultState(brand: BrandConfig, templateId: TemplateId = 
   return {
     brandId: brand.id,
     templateId,
-    blocks: DEFAULT_BLOCKS.map((b) => ({ ...b })),
+    blocks: applyPresetBlocks(
+      DEFAULT_BLOCKS.map((b) => ({ ...b })),
+      preset,
+    ),
     logoId: logo?.id ?? 'primary',
     layout: { ...preset.layout },
     spacing: JSON.parse(JSON.stringify(preset.spacing)),
@@ -48,7 +51,7 @@ export function createDefaultState(brand: BrandConfig, templateId: TemplateId = 
       maxHeightPx: 80,
       backingMode: 'brand-default',
     },
-    headshot: { enabled: false, url: '', sizePx: 72 },
+    headshot: { enabled: preset.defaultHeadshot ?? false, url: '', sizePx: 72 },
     identity: {
       fullName: '',
       jobTitle: '',
@@ -99,5 +102,14 @@ export function applyTemplateToState(state: SignatureFormState, templateId: Temp
     templateId,
     layout: { ...preset.layout },
     spacing: JSON.parse(JSON.stringify(preset.spacing)),
+    blocks: applyPresetBlocks(state.blocks, preset),
+    headshot: {
+      ...state.headshot,
+      enabled: preset.defaultHeadshot ?? state.headshot.enabled,
+    },
+    social:
+      templateId === 'headshot-affiliate'
+        ? { ...state.social, displayMode: 'icons', iconVariant: 'circle-filled' }
+        : state.social,
   }
 }

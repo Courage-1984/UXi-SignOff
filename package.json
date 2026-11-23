@@ -14,7 +14,8 @@
     "generate:assets": "node scripts/generate-placeholders.mjs",
     "generate:icons": "node scripts/generate-social-icons.mjs",
     "generate:thumbs": "node scripts/generate-template-thumbs.mjs",
-    "generate:qa": "node scripts/generate-qa-assets.mjs"
+    "generate:qa": "node scripts/generate-qa-assets.mjs",
+    "import:inspiration": "node scripts/import-inspiration-assets.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

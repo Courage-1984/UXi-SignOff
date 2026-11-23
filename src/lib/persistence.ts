@@ -1,6 +1,6 @@
 import { createDefaultState, NO_BANNER_ID } from '../config/defaults'
 import { getBrandById } from '../config/brands'
-import { getTemplatePreset } from '../config/templatePresets'
+import { getTemplatePreset, isKnownTemplateId } from '../config/templatePresets'
 import type { SignatureFormState, TemplateId } from '../types/signature'
 
 const STORAGE_KEY = 'uxi-signoff-v2'
@@ -52,7 +52,8 @@ function migrateV1(raw: Record<string, unknown>): SignatureFormState | null {
 function hydratePartial(saved: Partial<SignatureFormState>, brandId: string): SignatureFormState {
   const brand = getBrandById(brandId)
   if (!brand) throw new Error('unknown brand')
-  const templateId = (saved.templateId as TemplateId) ?? 'classic-split'
+  const rawTemplate = (saved.templateId as string) ?? 'classic-split'
+  const templateId: TemplateId = isKnownTemplateId(rawTemplate) ? rawTemplate : 'classic-split'
   const base = createDefaultState(brand, templateId)
   const preset = getTemplatePreset(templateId)
   return {

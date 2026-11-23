@@ -55,6 +55,14 @@ export interface BrandLogoBacking {
   padding?: string
 }
 
+export interface BrandDecorations {
+  panelLeft?: string
+  hero?: string
+  sideAccent?: string
+  partnerStrip?: string
+  contactIcons?: { role?: string; phone?: string }
+}
+
 export interface BrandConfig {
   id: string
   name: string
@@ -65,4 +73,5 @@ export interface BrandConfig {
   defaults: BrandDefaults
   legalDisclaimer: BrandLegalDisclaimer
   logoBacking?: BrandLogoBacking
+  decorations?: BrandDecorations
 }

@@ -257,5 +257,215 @@
       "text": "QA brand for automated and manual E2E testing only.",
       "locked": false
     }
+  },
+  {
+    "id": "ref-amc-panel",
+    "name": "Ref — AMC panel split",
+    "palette": {
+      "primary": "#15803d",
+      "accent": "#facc15",
+      "divider": "#facc15",
+      "textPrimary": "#1e293b",
+      "textMuted": "#64748b",
+      "buttonBg": "#15803d",
+      "buttonText": "#ffffff"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logos": [
+      {
+        "id": "primary",
+        "label": "AMC logo",
+        "file": "logo-primary.png",
+        "width": 120,
+        "height": 100,
+        "naturalWidth": 400,
+        "naturalHeight": 200,
+        "alt": "African Marketing Confederation"
+      }
+    ],
+    "banners": [],
+    "defaults": {
+      "website": "https://africanmarketingconfederation.org",
+      "address": "Lusaka, Zambia",
+      "tagline": "",
+      "social": { "linkedin": "https://linkedin.com/company/amc" },
+      "ctas": []
+    },
+    "legalDisclaimer": { "text": "Reference showcase brand for panel-split template.", "locked": false },
+    "decorations": {
+      "panelLeft": "panel-left.png",
+      "contactIcons": { "role": "icon-role.png", "phone": "icon-phone.png" }
+    }
+  },
+  {
+    "id": "ref-affiliate",
+    "name": "Ref — Affiliate stack",
+    "palette": {
+      "primary": "#0f172a",
+      "accent": "#0ea5e9",
+      "divider": "#0ea5e9",
+      "textPrimary": "#0f172a",
+      "textMuted": "#64748b",
+      "buttonBg": "#0ea5e9",
+      "buttonText": "#ffffff"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logos": [
+      {
+        "id": "primary",
+        "label": "Company mark",
+        "file": "affiliate-cta.png",
+        "width": 1,
+        "height": 1,
+        "naturalWidth": 1,
+        "naturalHeight": 1,
+        "alt": ""
+      }
+    ],
+    "banners": [
+      {
+        "id": "affiliate",
+        "label": "Affiliate CTA",
+        "file": "affiliate-cta.png",
+        "width": 560,
+        "height": 120,
+        "defaultUrl": "https://example.com/affiliate",
+        "alt": "Become an affiliate"
+      }
+    ],
+    "defaults": {
+      "website": "https://newoldstamp.com",
+      "address": "",
+      "tagline": "",
+      "social": {
+        "facebook": "https://facebook.com",
+        "x": "https://x.com",
+        "linkedin": "https://linkedin.com",
+        "youtube": "https://pinterest.com"
+      },
+      "ctas": []
+    },
+    "legalDisclaimer": { "text": "Reference showcase brand for headshot-affiliate template.", "locked": false }
+  },
+  {
+    "id": "ref-promo-stack",
+    "name": "Ref — Logo promo stack",
+    "palette": {
+      "primary": "#ad1457",
+      "accent": "#c2185b",
+      "divider": "#c2185b",
+      "textPrimary": "#4a148c",
+      "textMuted": "#757575",
+      "buttonBg": "#c2185b",
+      "buttonText": "#ffffff"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logos": [
+      {
+        "id": "primary",
+        "label": "Organization mark",
+        "file": "logo-primary.png",
+        "width": 80,
+        "height": 80,
+        "naturalWidth": 200,
+        "naturalHeight": 200,
+        "alt": "Organization logo"
+      }
+    ],
+    "banners": [
+      {
+        "id": "event",
+        "label": "Event promo",
+        "file": "event-promo.png",
+        "width": 560,
+        "height": 140,
+        "defaultUrl": "https://example.com/tickets",
+        "alt": "Fall Festival"
+      }
+    ],
+    "defaults": {
+      "website": "https://nashville.com",
+      "address": "Nashville",
+      "tagline": "",
+      "social": {},
+      "ctas": []
+    },
+    "legalDisclaimer": { "text": "Reference showcase brand for logo-promo-stack template.", "locked": false }
+  },
+  {
+    "id": "ref-conference-hero",
+    "name": "Ref — Conference hero",
+    "palette": {
+      "primary": "#14532d",
+      "accent": "#ca8a04",
+      "divider": "#ca8a04",
+      "textPrimary": "#14532d",
+      "textMuted": "#4b5563",
+      "buttonBg": "#14532d",
+      "buttonText": "#ffffff"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logos": [
+      {
+        "id": "primary",
+        "label": "AMC",
+        "file": "conference-hero.png",
+        "width": 1,
+        "height": 1,
+        "naturalWidth": 1,
+        "naturalHeight": 1,
+        "alt": ""
+      }
+    ],
+    "banners": [],
+    "defaults": {
+      "website": "https://www.africanmarketingconfederation.org",
+      "address": "",
+      "tagline": "",
+      "social": { "linkedin": "https://linkedin.com/company/amc" },
+      "ctas": [{ "label": "Submit Your Nomination", "url": "https://example.com/nominate" }]
+    },
+    "legalDisclaimer": { "text": "Reference showcase brand for conference-hero template.", "locked": false },
+    "decorations": { "hero": "conference-hero.png" }
+  },
+  {
+    "id": "ref-partner-showcase",
+    "name": "Ref — Partner showcase",
+    "palette": {
+      "primary": "#166534",
+      "accent": "#84cc16",
+      "divider": "#166534",
+      "textPrimary": "#14532d",
+      "textMuted": "#6b7280",
+      "buttonBg": "#166534",
+      "buttonText": "#ffffff"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logoBacking": { "enabled": true, "color": "#ffffff", "padding": "8px" },
+    "logos": [
+      {
+        "id": "primary",
+        "label": "Brand mark",
+        "file": "logo-primary.png",
+        "width": 100,
+        "height": 100,
+        "naturalWidth": 200,
+        "naturalHeight": 200,
+        "alt": "UXi Creative Marketing"
+      }
+    ],
+    "banners": [],
+    "defaults": {
+      "website": "https://uxicreative.co.za",
+      "address": "Harlequins Office Park, 164 Totius St, Pretoria",
+      "tagline": "",
+      "social": { "linkedin": "https://linkedin.com" },
+      "ctas": []
+    },
+    "legalDisclaimer": { "text": "Reference showcase brand for partner-showcase template.", "locked": false },
+    "decorations": {
+      "sideAccent": "side-accent.png",
+      "partnerStrip": "partner-strip.png"
+    }
   }
 ]
