@@ -1,0 +1,181 @@
+[
+  {
+    "id": "uxi-creative",
+    "name": "UXi Creative",
+    "palette": {
+      "primary": "#1A1A2E",
+      "accent": "#E94560",
+      "divider": "#E94560",
+      "textPrimary": "#1A1A2E",
+      "textMuted": "#6B7280",
+      "buttonBg": "#E94560",
+      "buttonText": "#FFFFFF"
+    },
+    "fontFamily": "'Segoe UI', Arial, Helvetica, sans-serif",
+    "logoBacking": { "enabled": true, "color": "#ffffff", "padding": "4px" },
+    "logos": [
+      {
+        "id": "primary",
+        "label": "Primary Logo",
+        "file": "logo-primary.png",
+        "width": 140,
+        "height": 48,
+        "naturalWidth": 280,
+        "naturalHeight": 96,
+        "alt": "UXi Creative"
+      },
+      {
+        "id": "alt",
+        "label": "Compact Logo",
+        "file": "logo-alt.png",
+        "width": 120,
+        "height": 40,
+        "naturalWidth": 240,
+        "naturalHeight": 80,
+        "alt": "UXi Creative"
+      }
+    ],
+    "banners": [
+      {
+        "id": "campaign-a",
+        "label": "Spring Campaign",
+        "file": "banner-campaign-a.png",
+        "width": 560,
+        "height": 100,
+        "defaultUrl": "https://uxicreative.example.com/campaign",
+        "alt": "UXi Creative — Spring Campaign"
+      },
+      {
+        "id": "campaign-b",
+        "label": "Services Promo",
+        "file": "banner-campaign-b.png",
+        "width": 560,
+        "height": 100,
+        "defaultUrl": "https://uxicreative.example.com/services",
+        "alt": "UXi Creative — Our Services"
+      }
+    ],
+    "defaults": {
+      "website": "https://uxicreative.example.com",
+      "address": "123 Design District, Cape Town, 8001",
+      "tagline": "Design that delivers.",
+      "social": {
+        "linkedin": "https://linkedin.com/company/uxi-creative",
+        "instagram": "https://instagram.com/uxicreative",
+        "x": "https://x.com/uxicreative"
+      },
+      "ctas": [
+        { "label": "Book a Meeting", "url": "https://uxicreative.example.com/book" },
+        { "label": "Visit Website", "url": "https://uxicreative.example.com" }
+      ]
+    },
+    "legalDisclaimer": {
+      "text": "This email and any attachments are confidential and intended solely for the addressee. If you are not the intended recipient, please delete this message and notify the sender.",
+      "locked": true
+    }
+  },
+  {
+    "id": "partner-alpha",
+    "name": "Partner Alpha",
+    "palette": {
+      "primary": "#0F4C81",
+      "accent": "#2EC4B6",
+      "divider": "#2EC4B6",
+      "textPrimary": "#0F4C81",
+      "textMuted": "#64748B",
+      "buttonBg": "#0F4C81",
+      "buttonText": "#FFFFFF"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logoBacking": { "enabled": true, "color": "#ffffff", "padding": "4px" },
+    "logos": [
+      {
+        "id": "primary",
+        "label": "Primary Logo",
+        "file": "logo-primary.png",
+        "width": 150,
+        "height": 44,
+        "naturalWidth": 300,
+        "naturalHeight": 88,
+        "alt": "Partner Alpha"
+      }
+    ],
+    "banners": [
+      {
+        "id": "campaign-a",
+        "label": "Q4 Offer",
+        "file": "banner-campaign-a.png",
+        "width": 560,
+        "height": 90,
+        "defaultUrl": "https://partneralpha.example.com/offer",
+        "alt": "Partner Alpha — Q4 Offer"
+      }
+    ],
+    "defaults": {
+      "website": "https://partneralpha.example.com",
+      "address": "45 Harbour Road, Johannesburg, 2000",
+      "tagline": "Innovation for growth.",
+      "social": {
+        "linkedin": "https://linkedin.com/company/partner-alpha",
+        "facebook": "https://facebook.com/partneralpha"
+      },
+      "ctas": [{ "label": "Get in Touch", "url": "https://partneralpha.example.com/contact" }]
+    },
+    "legalDisclaimer": {
+      "text": "Partner Alpha (Pty) Ltd. All rights reserved. This communication is privileged and confidential.",
+      "locked": true
+    }
+  },
+  {
+    "id": "partner-beta",
+    "name": "Partner Beta",
+    "palette": {
+      "primary": "#2D3142",
+      "accent": "#EF8354",
+      "divider": "#EF8354",
+      "textPrimary": "#2D3142",
+      "textMuted": "#7A7A7A",
+      "buttonBg": "#EF8354",
+      "buttonText": "#FFFFFF"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logoBacking": { "enabled": true, "color": "#ffffff", "padding": "4px" },
+    "logos": [
+      {
+        "id": "primary",
+        "label": "Primary Logo",
+        "file": "logo-primary.png",
+        "width": 130,
+        "height": 42,
+        "naturalWidth": 260,
+        "naturalHeight": 84,
+        "alt": "Partner Beta"
+      }
+    ],
+    "banners": [
+      {
+        "id": "campaign-a",
+        "label": "Product Launch",
+        "file": "banner-campaign-a.png",
+        "width": 560,
+        "height": 95,
+        "defaultUrl": "https://partnerbeta.example.com/launch",
+        "alt": "Partner Beta — Product Launch"
+      }
+    ],
+    "defaults": {
+      "website": "https://partnerbeta.example.com",
+      "address": "88 Loop Street, Cape Town, 8001",
+      "tagline": "Built for people.",
+      "social": {
+        "linkedin": "https://linkedin.com/company/partner-beta",
+        "youtube": "https://youtube.com/@partnerbeta"
+      },
+      "ctas": [{ "label": "Explore Products", "url": "https://partnerbeta.example.com/products" }]
+    },
+    "legalDisclaimer": {
+      "text": "The information in this email is provided by Partner Beta and may be subject to professional privilege.",
+      "locked": false
+    }
+  }
+]

@@ -1,0 +1,24 @@
+import type { CompileContext } from './context'
+import { escapeHtml, inlineStyle, presentationTable } from './utils/html'
+import { normalizeHref } from './utils/urls'
+
+export function renderHeadshot(ctx: CompileContext): string {
+  const { headshot } = ctx.state
+  if (!headshot.enabled || !headshot.url.trim()) return ''
+  const size = headshot.sizePx
+  const href = normalizeHref(headshot.url)
+  const src = href
+  const imgStyle = inlineStyle({
+    display: 'block',
+    border: '0',
+    outline: 'none',
+    width: `${size}px`,
+    height: `${size}px`,
+    'max-width': `${size}px`,
+    'border-radius': '50%',
+    '-ms-interpolation-mode': 'bicubic',
+  })
+  return `${presentationTable()}<tr><td style="${inlineStyle({ padding: '0 8px 0 0' })}">
+    <img src="${escapeHtml(src)}" width="${size}" height="${size}" alt="Photo" style="${imgStyle}" />
+  </td></tr></table>`
+}
