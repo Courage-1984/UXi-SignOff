@@ -177,5 +177,85 @@
       "text": "The information in this email is provided by Partner Beta and may be subject to professional privilege.",
       "locked": false
     }
+  },
+  {
+    "id": "qa-shapes",
+    "name": "QA Shapes (E2E)",
+    "palette": {
+      "primary": "#2563EB",
+      "accent": "#7C3AED",
+      "divider": "#7C3AED",
+      "textPrimary": "#1E293B",
+      "textMuted": "#64748B",
+      "buttonBg": "#2563EB",
+      "buttonText": "#FFFFFF"
+    },
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "logoBacking": { "enabled": true, "color": "#ffffff", "padding": "4px" },
+    "logos": [
+      {
+        "id": "wide",
+        "label": "Wide wordmark",
+        "file": "logo-wide.png",
+        "width": 160,
+        "height": 32,
+        "naturalWidth": 400,
+        "naturalHeight": 80,
+        "alt": "QA wide logo"
+      },
+      {
+        "id": "square",
+        "label": "Square mark",
+        "file": "logo-square.png",
+        "width": 64,
+        "height": 64,
+        "naturalWidth": 200,
+        "naturalHeight": 200,
+        "alt": "QA square logo"
+      },
+      {
+        "id": "tall",
+        "label": "Tall crest",
+        "file": "logo-tall.png",
+        "width": 48,
+        "height": 128,
+        "naturalWidth": 120,
+        "naturalHeight": 320,
+        "alt": "QA tall logo"
+      }
+    ],
+    "banners": [
+      {
+        "id": "wide",
+        "label": "Wide banner",
+        "file": "banner-wide.png",
+        "width": 560,
+        "height": 80,
+        "defaultUrl": "https://example.com/wide",
+        "alt": "QA wide banner"
+      },
+      {
+        "id": "square",
+        "label": "Square banner",
+        "file": "banner-square.png",
+        "width": 400,
+        "height": 400,
+        "defaultUrl": "https://example.com/square",
+        "alt": "QA square banner"
+      }
+    ],
+    "defaults": {
+      "website": "https://example.com",
+      "address": "QA Asset Lab, Test City",
+      "tagline": "Shape matrix brand.",
+      "social": {
+        "linkedin": "https://linkedin.com/company/qa-shapes"
+      },
+      "ctas": [{ "label": "QA CTA", "url": "https://example.com/cta" }]
+    },
+    "legalDisclaimer": {
+      "text": "QA brand for automated and manual E2E testing only.",
+      "locked": false
+    }
   }
 ]

@@ -1,13 +1,15 @@
 import type { CompileContext } from './context'
 import { escapeHtml, inlineStyle, presentationTable } from './utils/html'
-import { normalizeHref } from './utils/urls'
+import { resolveImageSrc } from './utils/urls'
 
 export function renderHeadshot(ctx: CompileContext): string {
   const { headshot } = ctx.state
   if (!headshot.enabled || !headshot.url.trim()) return ''
+
   const size = headshot.sizePx
-  const href = normalizeHref(headshot.url)
-  const src = href
+  const src = resolveImageSrc(ctx.assetBaseUrl, headshot.url)
+  if (!src) return ''
+
   const imgStyle = inlineStyle({
     display: 'block',
     border: '0',

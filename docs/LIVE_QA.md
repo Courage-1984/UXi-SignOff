@@ -2,6 +2,8 @@
 
 Run **after** deploy to `https://<owner>.github.io/UXi-SignOff/` — not from `localhost`.
 
+For local battle-test results and journey coverage, see [E2E_REPORT.md](./E2E_REPORT.md).
+
 ## Pre-flight (browser)
 
 - [ ] App loads without 404 on JS/CSS (paths under `/UXi-SignOff/`).

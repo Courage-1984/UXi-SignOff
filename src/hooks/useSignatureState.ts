@@ -14,8 +14,15 @@ export function useSignatureState() {
     if (saved && getBrandById(saved.brandId)) return saved
     return createDefaultState(initialBrand!)
   })
-  const history = useRef<SignatureFormState[]>([state])
+  const history = useRef<SignatureFormState[]>([])
   const index = useRef(0)
+
+  useEffect(() => {
+    if (history.current.length === 0) {
+      history.current = [state]
+      index.current = 0
+    }
+  }, [])
 
   const setState = useCallback((next: SignatureFormState | ((prev: SignatureFormState) => SignatureFormState)) => {
     setStateRaw((prev) => {
@@ -69,6 +76,21 @@ export function useSignatureState() {
     index.current += 1
     setStateRaw(history.current[index.current]!)
   }, [])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey)) return
+      if (e.key === 'z' && !e.shiftKey) {
+        e.preventDefault()
+        undo()
+      } else if ((e.key === 'z' && e.shiftKey) || e.key === 'y') {
+        e.preventDefault()
+        redo()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [undo, redo])
 
   return { state, setState, setBrand, resetToBrandDefaults, undo, redo }
 }

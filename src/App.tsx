@@ -5,7 +5,14 @@ import { compileSignatureHtml, getDefaultAssetBaseUrl } from './compiler/compile
 import { useBuilderTheme } from './hooks/useBuilderTheme'
 import { useSignatureState } from './hooks/useSignatureState'
 import { copyRawHtml, copyRichHtml } from './lib/clipboard'
-import { saveProfile, listProfiles, loadProfile, deleteProfile } from './lib/profiles'
+import {
+  saveProfile,
+  listProfiles,
+  loadProfile,
+  deleteProfile,
+  exportProfilesJson,
+  importProfilesFromJson,
+} from './lib/profiles'
 import { encodeShareHash, toShareableSlice } from './lib/shareState'
 import type { SignatureFormState } from './types/signature'
 import { AdminOverride } from './components/builder/AdminOverride'
@@ -122,10 +129,50 @@ function ProfilesBar({ state, onLoad, showToast }: { state: SignatureFormState; 
         <input className="flex-1 rounded border border-ctp-surface1 bg-ctp-base px-2 py-1" value={name} placeholder="Profile name" onChange={(e) => setName(e.target.value)} />
         <button type="button" className="rounded bg-ctp-accent px-2 py-1 text-white" onClick={() => { if (name.trim()) { saveProfile(name, state); showToast('Profile saved'); setName('') } }}>Save</button>
       </div>
-      <ul className="mt-2 space-y-1">{profiles.map((p) => (
-        <li key={p.id} className="flex gap-2"><button type="button" className="text-ctp-accent" onClick={() => { const s = loadProfile(p.id); if (s) onLoad(s) }}>{p.name}</button>
-          <button type="button" className="text-xs text-ctp-red" onClick={() => deleteProfile(p.id)}>Delete</button></li>
-      ))}</ul>
+      <div className="mt-2 flex flex-wrap gap-2">
+        <button
+          type="button"
+          className="rounded border border-ctp-surface1 px-2 py-1 text-xs"
+          onClick={() => {
+            const blob = new Blob([exportProfilesJson()], { type: 'application/json' })
+            const url = URL.createObjectURL(blob)
+            const anchor = document.createElement('a')
+            anchor.href = url
+            anchor.download = 'uxi-signoff-profiles.json'
+            anchor.click()
+            URL.revokeObjectURL(url)
+            showToast('Profiles JSON downloaded')
+          }}
+        >
+          Export JSON
+        </button>
+        <label className="cursor-pointer rounded border border-ctp-surface1 px-2 py-1 text-xs">
+          Import JSON
+          <input
+            type="file"
+            accept="application/json"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0]
+              if (!file) return
+              const reader = new FileReader()
+              reader.onload = () => {
+                const ok = importProfilesFromJson(String(reader.result))
+                showToast(ok ? 'Profiles imported' : 'Import failed')
+              }
+              reader.readAsText(file)
+            }}
+          />
+        </label>
+      </div>
+      <ul className="mt-2 space-y-1">
+        {profiles.map((p) => (
+          <li key={p.id} className="flex gap-2">
+            <button type="button" className="text-ctp-accent" onClick={() => { const s = loadProfile(p.id); if (s) onLoad(s) }}>{p.name}</button>
+            <button type="button" className="text-xs text-ctp-red" onClick={() => deleteProfile(p.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

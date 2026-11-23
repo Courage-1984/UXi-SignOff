@@ -37,3 +37,19 @@ export function deleteProfile(id: string): void {
 export function loadProfile(id: string): SignatureFormState | null {
   return listProfiles().find((p) => p.id === id)?.state ?? null
 }
+
+export function exportProfilesJson(): string {
+  return JSON.stringify(listProfiles(), null, 2)
+}
+
+export function importProfilesFromJson(raw: string): boolean {
+  try {
+    const data = JSON.parse(raw) as SavedProfile[]
+    if (!Array.isArray(data)) return false
+    const existing = listProfiles()
+    localStorage.setItem(KEY, JSON.stringify([...existing, ...data]))
+    return true
+  } catch {
+    return false
+  }
+}

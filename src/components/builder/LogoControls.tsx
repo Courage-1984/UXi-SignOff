@@ -76,10 +76,11 @@ export function LogoControls({ brand, state, onChange }: Props) {
             </label>
             <input
               className="w-full rounded-md border border-ctp-surface1 bg-ctp-mantle px-2 py-1 text-sm"
-              placeholder="Headshot image URL (HTTPS)"
+              placeholder="/assets/qa/headshot-square.png"
               value={state.headshot.url}
               onChange={(e) => onChange({ ...state, headshot: { ...state.headshot, url: e.target.value } })}
             />
+            <p className="mt-1 text-xs text-ctp-subtext0">Use path under /assets/… (resolved to HTTPS in copied HTML).</p>
           </>
         )}
         {logo && (

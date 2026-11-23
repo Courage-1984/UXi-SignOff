@@ -35,6 +35,31 @@ export function SocialEditor({ state, onChange }: Props) {
           ]}
           onChange={(iconVariant) => onChange({ ...state, social: { ...social, iconVariant: iconVariant as typeof social.iconVariant } })}
         />
+        <div className="grid gap-2 sm:grid-cols-2">
+          <FieldSelect
+            label="Direction"
+            value={social.layout.direction}
+            options={[
+              ['row', 'Row'],
+              ['column', 'Column'],
+            ]}
+            onChange={(v) =>
+              onChange({ ...state, social: { ...social, layout: { ...social.layout, direction: v as 'row' | 'column' } } })
+            }
+          />
+          <FieldSelect
+            label="Align"
+            value={social.layout.align}
+            options={[
+              ['left', 'Left'],
+              ['center', 'Center'],
+              ['right', 'Right'],
+            ]}
+            onChange={(v) =>
+              onChange({ ...state, social: { ...social, layout: { ...social.layout, align: v as 'left' | 'center' | 'right' } } })
+            }
+          />
+        </div>
         <FieldSelect
           label="Separator (text mode)"
           value={social.separator}

@@ -19,12 +19,12 @@ interface AdminOverrideProps {
 
 export function AdminOverride({ value, defaults, onChange }: AdminOverrideProps) {
   return (
-    <details className="rounded-lg border border-dashed border-gray-300 bg-gray-50">
-      <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-gray-700">
+    <details className="rounded-lg border border-dashed border-ctp-surface1 bg-ctp-base">
+      <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ctp-text">
         Brand admin override (testing)
       </summary>
-      <div className="space-y-3 border-t border-gray-200 px-3 py-3">
-        <label className="flex items-center gap-2 text-sm">
+      <div className="space-y-3 border-t border-ctp-surface0 px-3 py-3">
+        <label className="flex items-center gap-2 text-sm text-ctp-text">
           <input
             type="checkbox"
             checked={value.enabled}
@@ -35,10 +35,10 @@ export function AdminOverride({ value, defaults, onChange }: AdminOverrideProps)
         <div className="grid gap-2 sm:grid-cols-2">
           {FIELDS.map(({ key, label }) => (
             <label key={key} className="block text-xs">
-              <span className="text-gray-500">{label}</span>
+              <span className="text-ctp-subtext0">{label}</span>
               <input
                 type="color"
-                className="mt-1 h-9 w-full cursor-pointer rounded border border-gray-300"
+                className="mt-1 h-9 w-full cursor-pointer rounded border border-ctp-surface1"
                 value={value.palette[key] ?? defaults[key]}
                 disabled={!value.enabled}
                 onChange={(e) =>

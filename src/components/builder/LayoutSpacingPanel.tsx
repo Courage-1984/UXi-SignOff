@@ -63,6 +63,40 @@ export function LayoutSpacingPanel({ state, onChange }: Props) {
         Show divider
       </label>
       <Slider label="Divider thickness" value={state.spacing.divider.thicknessPx} max={4} onChange={(v) => setSpacing({ divider: { ...state.spacing.divider, thicknessPx: v } })} />
+      <label className="block text-xs text-ctp-subtext0">
+        Divider style
+        <select
+          className={`${inputClass} mt-1`}
+          value={state.spacing.divider.style}
+          onChange={(e) =>
+            setSpacing({
+              divider: { ...state.spacing.divider, style: e.target.value as SpacingSettings['divider']['style'] },
+            })
+          }
+        >
+          <option value="solid">Solid</option>
+          <option value="dashed">Dashed</option>
+          <option value="dotted">Dotted</option>
+        </select>
+      </label>
+      <label className="block text-xs text-ctp-subtext0">
+        Divider orientation
+        <select
+          className={`${inputClass} mt-1`}
+          value={state.spacing.divider.orientation}
+          onChange={(e) =>
+            setSpacing({
+              divider: {
+                ...state.spacing.divider,
+                orientation: e.target.value as SpacingSettings['divider']['orientation'],
+              },
+            })
+          }
+        >
+          <option value="vertical">Vertical</option>
+          <option value="horizontal">Horizontal</option>
+        </select>
+      </label>
     </section>
   )
 }

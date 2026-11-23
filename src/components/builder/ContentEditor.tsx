@@ -36,6 +36,41 @@ export function ContentEditor({ brand, state, onChange }: ContentEditorProps) {
       </Accordion>
 
       <Accordion title="CTA buttons">
+        <div className="mb-3 grid gap-2 sm:grid-cols-2">
+          <label className="text-xs text-ctp-subtext0">
+            Direction
+            <select
+              className={`${inputClass} mt-1`}
+              value={state.cta.layout.direction}
+              onChange={(e) =>
+                onChange({
+                  ...state,
+                  cta: { ...state.cta, layout: { ...state.cta.layout, direction: e.target.value as 'row' | 'column' } },
+                })
+              }
+            >
+              <option value="row">Row</option>
+              <option value="column">Column</option>
+            </select>
+          </label>
+          <label className="text-xs text-ctp-subtext0">
+            Align
+            <select
+              className={`${inputClass} mt-1`}
+              value={state.cta.layout.align}
+              onChange={(e) =>
+                onChange({
+                  ...state,
+                  cta: { ...state.cta, layout: { ...state.cta.layout, align: e.target.value as 'left' | 'center' | 'right' } },
+                })
+              }
+            >
+              <option value="left">Left</option>
+              <option value="center">Center</option>
+              <option value="right">Right</option>
+            </select>
+          </label>
+        </div>
         {state.cta.buttons.map((btn, i) => (
           <div key={i} className="mb-3 rounded-lg border border-ctp-surface0 bg-ctp-mantle p-3">
             <label className="mb-2 flex items-center gap-2 text-sm text-ctp-text">

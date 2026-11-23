@@ -84,6 +84,22 @@ describe('compileSignatureHtml', () => {
     expect(html).toContain('https://cal.example.com')
   })
 
+  it('qa-shapes wide logo respects display width', () => {
+    const { state, brand } = sampleState('qa-shapes', 'classic-split')
+    state.logoId = 'wide'
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('logo-wide.png')
+    expect(html).toMatch(/width="160"/)
+    expect(html).toMatch(/width:\s*160px/)
+  })
+
+  it('headshot resolves local asset path', () => {
+    const { state, brand } = sampleState('uxi-creative', 'dual-visual')
+    state.headshot = { enabled: true, url: '/assets/qa/headshot-square.png', sizePx: 72 }
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain(`${ASSET_BASE}/assets/qa/headshot-square.png`)
+  })
+
   it('legal font size and divider', () => {
     const { state, brand } = sampleState('uxi-creative', 'classic-split')
     state.legal.fontSizePx = 11

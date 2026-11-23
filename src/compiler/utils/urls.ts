@@ -25,6 +25,16 @@ export function normalizeDisplayUrl(url: string): string {
   return url.replace(/^https?:\/\//i, '').replace(/\/$/, '')
 }
 
+/** Absolute src for signature images (headshots, etc.) — not for page links. */
+export function resolveImageSrc(assetBaseUrl: string, url: string): string {
+  const trimmed = url.trim()
+  if (!trimmed) return ''
+  if (/^https?:\/\//i.test(trimmed)) return trimmed
+  const base = assetBaseUrl.replace(/\/$/, '')
+  const path = trimmed.startsWith('/') ? trimmed : `/${trimmed}`
+  return `${base}${path}`
+}
+
 export function appendUtm(url: string, campaign: string): string {
   if (!url || !campaign) return url
   try {
