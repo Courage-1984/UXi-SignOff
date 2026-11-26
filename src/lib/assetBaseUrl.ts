@@ -20,7 +20,7 @@ export function resolveAssetBaseUrl(input: AssetBaseUrlInput): string {
     return input.origin.replace(/\/$/, '')
   }
 
-  return (input.nodeFallback ?? 'https://example.github.io/UXi-SignOff').replace(/\/$/, '')
+  return (input.nodeFallback ?? 'https://courage-1984.github.io/UXi-SignOff').replace(/\/$/, '')
 }
 
 export function getDefaultAssetBaseUrl(): string {
@@ -28,6 +28,6 @@ export function getDefaultAssetBaseUrl(): string {
     viteAssetBaseUrl: import.meta.env.VITE_ASSET_BASE_URL as string | undefined,
     origin: typeof window !== 'undefined' ? window.location.origin : undefined,
     basePath: import.meta.env.BASE_URL as string | undefined,
-    nodeFallback: 'https://example.github.io/UXi-SignOff',
+    nodeFallback: 'https://courage-1984.github.io/UXi-SignOff',
   })
 }

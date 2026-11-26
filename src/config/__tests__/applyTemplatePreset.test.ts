@@ -21,7 +21,7 @@ describe('applyTemplateToState', () => {
     expect(state.banner.bannerId).toBe(NO_BANNER_ID)
     expect(state.blocks.find((b) => b.id === 'cta')?.enabled).toBe(true)
     expect(state.blocks.find((b) => b.id === 'banner')?.enabled).toBe(false)
-    expect(state.social.displayMode).toBe('text')
+    expect(state.social.displayMode).toBe('icons')
     expect(state.social.iconVariant).toBe('neutral')
     expect(state.spacing.divider.visible).toBe(true)
   })

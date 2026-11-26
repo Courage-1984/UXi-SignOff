@@ -28,7 +28,7 @@ function defaultSocialFields(brand: BrandConfig) {
     youtube: { enabled: Boolean(social.youtube), url: social.youtube ?? '' },
     tiktok: { enabled: false, url: '' },
     websiteGlobe: { enabled: true, url: brand.defaults.website },
-    displayMode: 'text' as const,
+    displayMode: 'icons' as const,
     separator: 'pipe' as const,
     iconVariant: 'neutral' as const,
     layout: { direction: 'row' as const, align: 'left' as const },

@@ -35,7 +35,7 @@ const STANDARD_BLOCKS: Record<BlockId, boolean> = {
 }
 
 const DEFAULT_SOCIAL_PRESENTATION: Pick<SocialFields, 'displayMode' | 'iconVariant' | 'separator' | 'layout'> = {
-  displayMode: 'text',
+  displayMode: 'icons',
   iconVariant: 'neutral',
   separator: 'pipe',
   layout: { direction: 'row', align: 'left' },

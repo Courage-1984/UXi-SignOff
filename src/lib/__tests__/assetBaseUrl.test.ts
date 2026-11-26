@@ -31,6 +31,6 @@ describe('resolveAssetBaseUrl', () => {
   })
 
   it('falls back in node-like context', () => {
-    expect(resolveAssetBaseUrl({})).toBe('https://example.github.io/UXi-SignOff')
+    expect(resolveAssetBaseUrl({})).toBe('https://courage-1984.github.io/UXi-SignOff')
   })
 })
