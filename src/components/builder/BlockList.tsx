@@ -15,7 +15,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import type { ReactNode } from 'react'
+import { BuilderSection } from './BuilderSection'
 import { GripVertical } from 'lucide-react'
 import type { BlockConfig, BlockId } from '../../types/signature'
 
@@ -94,7 +94,7 @@ export function BlockList({ blocks, onChange }: BlockListProps) {
   }
 
   return (
-    <BlockSection title="Signature blocks">
+    <BuilderSection sectionId="blocks" title="Signature blocks">
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
           <ul className="space-y-2">
@@ -104,15 +104,6 @@ export function BlockList({ blocks, onChange }: BlockListProps) {
           </ul>
         </SortableContext>
       </DndContext>
-    </BlockSection>
-  )
-}
-
-function BlockSection({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section>
-      <h2 className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500">{title}</h2>
-      {children}
-    </section>
+    </BuilderSection>
   )
 }

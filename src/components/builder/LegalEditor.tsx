@@ -1,5 +1,6 @@
 import type { BrandConfig } from '../../types/brand'
 import type { SignatureFormState } from '../../types/signature'
+import { BuilderSection } from './BuilderSection'
 
 const inputClass =
   'w-full rounded-md border border-ctp-surface1 bg-ctp-mantle px-3 py-2 text-sm text-ctp-text'
@@ -16,9 +17,8 @@ export function LegalEditor({ brand, state, onChange }: Props) {
     onChange({ ...state, legal: { ...state.legal, ...patch } })
 
   return (
-    <details className="rounded-lg border border-ctp-surface0 bg-ctp-base" open>
-      <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ctp-text">Legal disclaimer</summary>
-      <div className="space-y-2 border-t border-ctp-surface0 px-3 py-3">
+    <BuilderSection sectionId="legal" title="Legal disclaimer">
+      <div className="space-y-2">
         {brand.legalDisclaimer.locked && (
           <p className="text-xs text-ctp-yellow">Brand standard legal text. Unlock to edit locally.</p>
         )}
@@ -60,6 +60,6 @@ export function LegalEditor({ brand, state, onChange }: Props) {
           Top divider line
         </label>
       </div>
-    </details>
+    </BuilderSection>
   )
 }

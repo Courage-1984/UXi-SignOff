@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @import './styles/catppuccin.css';
 
+html {
+  overflow-y: auto;
+}
+
 html,
 body,
 #root {
@@ -8,9 +12,14 @@ body,
   min-height: 100%;
 }
 
+.preview-full-invert img {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 body {
   font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   background: var(--ctp-base);
   color: var(--ctp-text);
+  overflow-x: hidden;
 }

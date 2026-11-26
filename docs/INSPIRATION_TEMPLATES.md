@@ -1,6 +1,8 @@
 # Inspiration layout templates
 
-Five **layout-only** templates approximate common high-design email signatures. They do not change your brand when selected; only layout, spacing, and default block toggles update.
+Five **layout-only** templates approximate common high-design email signatures. They do not change your brand when selected.
+
+**Switching any template** (core or inspiration) reapplies that template’s full preset: layout, spacing, padding/density, which blocks are on or off, banner selection, headshot on/off, social presentation (icons vs text), CTA layout, and related legal/divider options. Your **identity text**, **custom fields**, social URLs, and CTA labels/URLs are kept.
 
 For a close visual match to the bundled references, manually switch **Brand** to the matching `ref-*` showcase brand and fill identity fields.
 

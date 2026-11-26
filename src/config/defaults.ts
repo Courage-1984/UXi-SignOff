@@ -1,6 +1,11 @@
 import type { BrandConfig } from '../types/brand'
 import type { BlockConfig, SignatureFormState, TemplateId } from '../types/signature'
-import { applyPresetBlocks, getTemplatePreset } from './templatePresets'
+import { applyStructuralPreset } from './applyTemplatePreset'
+import { NO_BANNER_ID, DEFAULT_TEMPLATE } from './constants'
+import { getTemplatePreset } from './templatePresets'
+
+export { NO_BANNER_ID, CUSTOM_BANNER_ID } from './constants'
+export { applyTemplateToState } from './applyTemplatePreset'
 
 export const DEFAULT_BLOCKS: BlockConfig[] = [
   { id: 'identity', enabled: true },
@@ -10,9 +15,7 @@ export const DEFAULT_BLOCKS: BlockConfig[] = [
   { id: 'legal', enabled: true },
 ]
 
-export const DEFAULT_TEMPLATE: TemplateId = 'classic-split'
-
-export const NO_BANNER_ID = 'none'
+export { DEFAULT_TEMPLATE }
 
 function defaultSocialFields(brand: BrandConfig) {
   const social = brand.defaults.social
@@ -33,25 +36,23 @@ function defaultSocialFields(brand: BrandConfig) {
 }
 
 export function createDefaultState(brand: BrandConfig, templateId: TemplateId = DEFAULT_TEMPLATE): SignatureFormState {
-  const preset = getTemplatePreset(templateId)
   const ctas = brand.defaults.ctas
   const logo = brand.logos[0]
-  return {
+  const base: SignatureFormState = {
     brandId: brand.id,
     templateId,
-    blocks: applyPresetBlocks(
-      DEFAULT_BLOCKS.map((b) => ({ ...b })),
-      preset,
-    ),
+    blocks: DEFAULT_BLOCKS.map((b) => ({ ...b })),
     logoId: logo?.id ?? 'primary',
-    layout: { ...preset.layout },
-    spacing: JSON.parse(JSON.stringify(preset.spacing)),
+    layout: getTemplatePreset(templateId).layout,
+    spacing: JSON.parse(JSON.stringify(getTemplatePreset(templateId).spacing)),
     logoRender: {
       maxWidthPx: logo?.width ?? 140,
       maxHeightPx: 80,
       backingMode: 'brand-default',
+      altOverride: '',
+      customImageUrl: '',
     },
-    headshot: { enabled: preset.defaultHeadshot ?? false, url: '', sizePx: 72 },
+    headshot: { enabled: false, url: '', sizePx: 72, alt: '' },
     identity: {
       fullName: '',
       jobTitle: '',
@@ -84,6 +85,9 @@ export function createDefaultState(brand: BrandConfig, templateId: TemplateId = 
       url: '',
       appendUtm: true,
       utmCampaign: brand.id,
+      imageAlt: '',
+      customImageUrl: '',
+      customWidthPx: 560,
     },
     legal: {
       text: brand.legalDisclaimer.text,
@@ -93,23 +97,6 @@ export function createDefaultState(brand: BrandConfig, templateId: TemplateId = 
     },
     paletteOverride: { enabled: false, palette: {} },
   }
-}
 
-export function applyTemplateToState(state: SignatureFormState, templateId: TemplateId): SignatureFormState {
-  const preset = getTemplatePreset(templateId)
-  return {
-    ...state,
-    templateId,
-    layout: { ...preset.layout },
-    spacing: JSON.parse(JSON.stringify(preset.spacing)),
-    blocks: applyPresetBlocks(state.blocks, preset),
-    headshot: {
-      ...state.headshot,
-      enabled: preset.defaultHeadshot ?? state.headshot.enabled,
-    },
-    social:
-      templateId === 'headshot-affiliate'
-        ? { ...state.social, displayMode: 'icons', iconVariant: 'circle-filled' }
-        : state.social,
-  }
+  return applyStructuralPreset(base, brand, templateId)
 }

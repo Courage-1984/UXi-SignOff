@@ -17,6 +17,22 @@
 
 **Battle tested:** Yes — builder happy paths verified in browser with Playwright MCP; regressions covered by Vitest + Playwright smoke.
 
+### Builder UX addendum (2026-11-24)
+
+- **Media:** Editable alt text on headshot, logo override, and banner; custom image URLs support GIFs (`resolveImageSrc`).
+- **Navbar:** Copy / share / reset / paste actions live in the header with hover tooltips (undo, redo, theme included).
+- **Panels:** Left builder uses collapsible `BuilderSection` for brand, templates, layout, blocks, profiles, and content editors.
+- **Automated:** Vitest alt/GIF compile cases; Playwright header actions, section collapse, headshot alt, custom GIF banner.
+
+Animated GIF support in inboxes varies (Outlook desktop often shows first frame only).
+
+### Scroll, accordion, and preview presets (2026-11-24)
+
+- **Page scroll:** Builder column no longer uses internal `max-h` scroll; preview panel uses document height (no nested `overflow-auto`). `html { overflow-y: auto }`.
+- **Accordion:** `BuilderSectionsProvider` + **Expand all** / **Collapse all** toolbar; controlled `BuilderSection` with `sectionId`.
+- **Preview:** Four client-style rendering presets (`unchangedLight`, `darkChromeUnchanged`, `partialInvert`, `fullInvert`) — see `docs/EMAIL_CLIENT_DARK_MODE.md`.
+- **Automated:** Vitest `previewRenderingPresets.test.ts`; Playwright collapse/expand all.
+
 ---
 
 ## Bugs fixed during E2E

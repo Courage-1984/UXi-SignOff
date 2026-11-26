@@ -13,4 +13,9 @@ describe('resolveImageSrc', () => {
       'https://example.github.io/UXi-SignOff/assets/qa/headshot-square.png',
     )
   })
+
+  it('resolves gif paths', () => {
+    expect(resolveImageSrc(base, 'https://cdn.example.com/anim.gif')).toBe('https://cdn.example.com/anim.gif')
+    expect(resolveImageSrc(base, '/assets/qa/anim.gif')).toContain('.gif')
+  })
 })

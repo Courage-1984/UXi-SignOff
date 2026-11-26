@@ -1,5 +1,6 @@
 import type { BrandConfig } from '../../types/brand'
 import type { SignatureFormState } from '../../types/signature'
+import { BuilderSection } from './BuilderSection'
 
 interface Props {
   brand: BrandConfig
@@ -10,9 +11,8 @@ interface Props {
 export function LogoControls({ brand, state, onChange }: Props) {
   const logo = brand.logos.find((l) => l.id === state.logoId) ?? brand.logos[0]
   return (
-    <details className="rounded-lg border border-ctp-surface0 bg-ctp-base">
-      <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ctp-text">Logo &amp; headshot</summary>
-      <div className="space-y-2 border-t border-ctp-surface0 px-3 py-3">
+    <BuilderSection sectionId="logo-headshot" title="Logo & headshot">
+      <div className="space-y-2">
         <label className="block text-xs text-ctp-subtext0">
           Logo asset
           <select
@@ -26,6 +26,28 @@ export function LogoControls({ brand, state, onChange }: Props) {
               </option>
             ))}
           </select>
+        </label>
+        <label className="block text-xs text-ctp-subtext0">
+          Logo alt text
+          <input
+            className="mt-1 w-full rounded-md border border-ctp-surface1 bg-ctp-mantle px-2 py-1 text-sm"
+            placeholder={logo?.alt ?? brand.name}
+            value={state.logoRender.altOverride}
+            onChange={(e) =>
+              onChange({ ...state, logoRender: { ...state.logoRender, altOverride: e.target.value } })
+            }
+          />
+        </label>
+        <label className="block text-xs text-ctp-subtext0">
+          Custom logo URL (PNG, GIF, …)
+          <input
+            className="mt-1 w-full rounded-md border border-ctp-surface1 bg-ctp-mantle px-2 py-1 text-sm"
+            placeholder="Leave empty to use brand asset"
+            value={state.logoRender.customImageUrl}
+            onChange={(e) =>
+              onChange({ ...state, logoRender: { ...state.logoRender, customImageUrl: e.target.value } })
+            }
+          />
         </label>
         <label className="block text-xs text-ctp-subtext0">
           Max width: {state.logoRender.maxWidthPx}px
@@ -80,7 +102,16 @@ export function LogoControls({ brand, state, onChange }: Props) {
               value={state.headshot.url}
               onChange={(e) => onChange({ ...state, headshot: { ...state.headshot, url: e.target.value } })}
             />
-            <p className="mt-1 text-xs text-ctp-subtext0">Use path under /assets/… (resolved to HTTPS in copied HTML).</p>
+            <label className="block text-xs text-ctp-subtext0">
+              Headshot alt text
+              <input
+                className="mt-1 w-full rounded-md border border-ctp-surface1 bg-ctp-mantle px-2 py-1 text-sm"
+                placeholder={state.identity.fullName || 'Photo'}
+                value={state.headshot.alt}
+                onChange={(e) => onChange({ ...state, headshot: { ...state.headshot, alt: e.target.value } })}
+              />
+            </label>
+            <p className="mt-1 text-xs text-ctp-subtext0">Use path under /assets/… or https://…. GIFs supported.</p>
           </>
         )}
         {logo && (
@@ -89,6 +120,6 @@ export function LogoControls({ brand, state, onChange }: Props) {
           </p>
         )}
       </div>
-    </details>
+    </BuilderSection>
   )
 }

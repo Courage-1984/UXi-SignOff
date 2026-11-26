@@ -1,5 +1,6 @@
 import { applyTemplateToState } from '../../config/defaults'
 import type { SignatureFormState, TemplateId } from '../../types/signature'
+import { BuilderSection } from './BuilderSection'
 
 type TemplateCard = { id: TemplateId; label: string; hint: string; thumb: string; inspiration?: boolean }
 
@@ -110,7 +111,7 @@ function TemplateGrid({
 export function TemplatePicker({ state, onChange }: TemplatePickerProps) {
   const pick = (id: TemplateId) => onChange(applyTemplateToState(state, id))
   return (
-    <>
+    <BuilderSection sectionId="templates" title="Templates" defaultOpen>
       <TemplateGrid legend="Layout templates" templates={CORE_TEMPLATES} state={state} onPick={pick} />
       <TemplateGrid legend="Inspiration layouts" templates={INSPIRATION_TEMPLATES} state={state} onPick={pick} />
       <p className="mt-2 text-xs text-ctp-subtext0">
@@ -118,6 +119,6 @@ export function TemplatePicker({ state, onChange }: TemplatePickerProps) {
         <em>ref-amc-panel</em>, <em>ref-affiliate</em>, etc. — see{' '}
         <code className="text-ctp-text">docs/INSPIRATION_TEMPLATES.md</code>.
       </p>
-    </>
+    </BuilderSection>
   )
 }

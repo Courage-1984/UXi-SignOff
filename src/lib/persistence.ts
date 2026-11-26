@@ -66,6 +66,7 @@ function hydratePartial(saved: Partial<SignatureFormState>, brandId: string): Si
     legal: { ...base.legal, ...saved.legal },
     logoRender: { ...base.logoRender, ...saved.logoRender },
     headshot: { ...base.headshot, ...saved.headshot },
+    banner: { ...base.banner, ...saved.banner },
     customFields: saved.customFields ?? [],
     blocks: saved.blocks ?? base.blocks,
   }

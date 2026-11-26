@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { brands } from '../../config/brands'
-import { createDefaultState } from '../../config/defaults'
+import { createDefaultState, CUSTOM_BANNER_ID } from '../../config/defaults'
 import type { PrimaryFlow, TemplateId } from '../../types/signature'
 import { compileSignatureHtml } from '../compileSignature'
 
@@ -100,9 +100,33 @@ describe('compileSignatureHtml', () => {
 
   it('headshot resolves local asset path', () => {
     const { state, brand } = sampleState('uxi-creative', 'dual-visual')
-    state.headshot = { enabled: true, url: '/assets/qa/headshot-square.png', sizePx: 72 }
+    state.headshot = { enabled: true, url: '/assets/qa/headshot-square.png', sizePx: 72, alt: 'Jane headshot' }
     const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
     expect(html).toContain(`${ASSET_BASE}/assets/qa/headshot-square.png`)
+    expect(html).toContain('alt="Jane headshot"')
+  })
+
+  it('custom banner gif and alt', () => {
+    const { state, brand } = sampleState('uxi-creative', 'executive-card')
+    state.blocks = state.blocks.map((b) => (b.id === 'banner' ? { ...b, enabled: true } : b))
+    state.banner = {
+      ...state.banner,
+      bannerId: CUSTOM_BANNER_ID,
+      customImageUrl: '/assets/qa/promo.gif',
+      customWidthPx: 400,
+      imageAlt: 'Animated promo',
+      url: 'https://example.com',
+    }
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('promo.gif')
+    expect(html).toContain('alt="Animated promo"')
+  })
+
+  it('logo alt override', () => {
+    const { state, brand } = sampleState('uxi-creative', 'classic-split')
+    state.logoRender = { ...state.logoRender, altOverride: 'Company wordmark' }
+    const { html } = compileSignatureHtml(state, brand, { assetBaseUrl: ASSET_BASE })
+    expect(html).toContain('alt="Company wordmark"')
   })
 
   it('legal font size and divider', () => {

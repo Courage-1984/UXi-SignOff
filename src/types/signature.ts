@@ -92,6 +92,9 @@ export interface BannerFields {
   url: string
   appendUtm: boolean
   utmCampaign: string
+  imageAlt: string
+  customImageUrl: string
+  customWidthPx: number
 }
 
 export interface LegalFields {
@@ -125,12 +128,15 @@ export interface LogoRenderSettings {
   maxWidthPx: number
   maxHeightPx: number
   backingMode: LogoBackingMode
+  altOverride: string
+  customImageUrl: string
 }
 
 export interface HeadshotFields {
   enabled: boolean
   url: string
   sizePx: number
+  alt: string
 }
 
 export interface PaletteOverride {

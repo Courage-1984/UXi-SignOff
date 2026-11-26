@@ -1,27 +1,33 @@
 import type { ReactNode } from 'react'
+import {
+  PREVIEW_RENDERING_PRESETS,
+  getPreviewPreset,
+  type PreviewRenderingPreset,
+} from '../../lib/previewRenderingPresets'
 
 interface PreviewPanelProps {
   html: string
   widthMode: 'desktop' | 'mobile'
-  darkSurround: boolean
+  renderingPreset: PreviewRenderingPreset
   onWidthModeChange: (mode: 'desktop' | 'mobile') => void
-  onDarkSurroundChange: (dark: boolean) => void
+  onRenderingPresetChange: (preset: PreviewRenderingPreset) => void
 }
 
 export function PreviewPanel({
   html,
   widthMode,
-  darkSurround,
+  renderingPreset,
   onWidthModeChange,
-  onDarkSurroundChange,
+  onRenderingPresetChange,
 }: PreviewPanelProps) {
   const previewWidth = widthMode === 'desktop' ? 640 : 360
+  const preset = getPreviewPreset(renderingPreset)
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="mb-3 flex flex-wrap gap-2">
+    <div className="flex max-w-full flex-col">
+      <div className="mb-2 flex flex-wrap gap-2">
         <ToggleGroup
-          label="Preview width"
+          label="Width"
           options={[
             { id: 'desktop', label: 'Desktop' },
             { id: 'mobile', label: 'Mobile' },
@@ -30,36 +36,38 @@ export function PreviewPanel({
           onChange={(v) => onWidthModeChange(v as 'desktop' | 'mobile')}
         />
         <ToggleGroup
-          label="Background"
-          options={[
-            { id: 'light', label: 'Light' },
-            { id: 'dark', label: 'Dark' },
-          ]}
-          value={darkSurround ? 'dark' : 'light'}
-          onChange={(v) => onDarkSurroundChange(v === 'dark')}
+          label="Rendering"
+          options={PREVIEW_RENDERING_PRESETS.map((p) => ({ id: p.id, label: p.shortLabel }))}
+          value={renderingPreset}
+          onChange={(v) => onRenderingPresetChange(v as PreviewRenderingPreset)}
         />
       </div>
+      <p className="mb-2 text-[10px] leading-snug text-ctp-subtext0">
+        Approximate client dark behavior — exported HTML is unchanged. Test in real inboxes. See{' '}
+        <span className="text-ctp-accent">docs/EMAIL_CLIENT_DARK_MODE.md</span>.
+      </p>
+      <p className="mb-2 text-[10px] text-ctp-subtext1">{preset.description}</p>
 
-      <div
-        className={`flex-1 overflow-auto rounded-xl border p-4 transition-colors ${
-          darkSurround ? 'border-gray-700 bg-[#1a1a1a]' : 'border-gray-200 bg-gray-100'
-        }`}
-      >
+      <div className={`rounded-xl border p-4 transition-colors ${preset.surroundClass}`}>
         <div
-          className="mx-auto rounded-lg bg-white shadow-sm"
+          className={`mx-auto rounded-lg ${preset.messageShellClass}`}
           style={{ width: previewWidth, maxWidth: '100%' }}
         >
-          <div className="border-b border-gray-100 px-4 py-3 text-xs text-gray-500">
+          <div className={`border-b px-4 py-3 text-xs ${preset.headerRowClass}`}>
             <p>
-              <span className="font-medium text-gray-700">From:</span> you@company.com
+              <span className={`font-medium ${preset.headerLabelClass}`}>From:</span> you@company.com
             </p>
             <p>
-              <span className="font-medium text-gray-700">Subject:</span> Quick follow-up
+              <span className={`font-medium ${preset.headerLabelClass}`}>Subject:</span> Quick follow-up
             </p>
           </div>
-          <div className="px-4 py-3 text-sm text-gray-800">
+          <div className={`px-4 py-3 text-sm ${preset.bodyTextClass}`}>
             <p className="mb-4">Hi there — thanks for your time today. Looking forward to next steps.</p>
-            <div dangerouslySetInnerHTML={{ __html: html }} />
+            <div
+              className={preset.signatureWrapperClass}
+              style={preset.signatureInlineStyle}
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
           </div>
         </div>
       </div>
@@ -85,8 +93,10 @@ function ToggleGroup({
           key={o.id}
           type="button"
           onClick={() => onChange(o.id)}
-          className={`rounded-md px-2.5 py-1 text-xs font-medium ${
-            value === o.id ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 ring-1 ring-gray-200'
+          className={`rounded-md px-2 py-1 text-[11px] font-medium ${
+            value === o.id
+              ? 'bg-indigo-600 text-white'
+              : 'bg-ctp-base text-ctp-text ring-1 ring-ctp-surface1'
           }`}
         >
           {o.label}
@@ -105,8 +115,8 @@ function InlineFieldset({
 }) {
   return (
     <fieldset className="flex items-center gap-2">
-      <span className="text-xs text-gray-500">{legend}</span>
-      <div className="flex gap-1">{children}</div>
+      <span className="text-[11px] text-ctp-subtext0">{legend}</span>
+      <div className="flex flex-wrap gap-1">{children}</div>
     </fieldset>
   )
 }

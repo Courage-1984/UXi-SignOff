@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
 import type { BrandConfig } from '../../types/brand'
-import { NO_BANNER_ID } from '../../config/defaults'
+import { CUSTOM_BANNER_ID, NO_BANNER_ID } from '../../config/defaults'
 import type { SignatureFormState } from '../../types/signature'
+import { BuilderSection } from './BuilderSection'
 
 interface ContentEditorProps {
   brand: BrandConfig
@@ -20,10 +20,12 @@ export function ContentEditor({ brand, state, onChange }: ContentEditorProps) {
   const patchCta = (buttons: SignatureFormState['cta']['buttons']) =>
     onChange({ ...state, cta: { ...state.cta, buttons } })
 
+  const bannerActive = state.banner.bannerId !== NO_BANNER_ID
+
   return (
     <div className="space-y-4">
-      <Accordion title="Identity & contact">
-        <FieldGrid>
+      <BuilderSection sectionId="identity" title="Identity & contact" defaultOpen>
+        <div className="grid gap-3 sm:grid-cols-2">
           <Field label="Full name" value={state.identity.fullName} onChange={(v) => setIdentity('fullName', v)} />
           <Field label="Job title" value={state.identity.jobTitle} onChange={(v) => setIdentity('jobTitle', v)} />
           <Field label="Department" value={state.identity.department} onChange={(v) => setIdentity('department', v)} />
@@ -32,10 +34,10 @@ export function ContentEditor({ brand, state, onChange }: ContentEditorProps) {
           <Field label="Website" value={state.identity.website} onChange={(v) => setIdentity('website', v)} />
           <Field label="Address" value={state.identity.address} onChange={(v) => setIdentity('address', v)} />
           <Field label="Tagline" value={state.identity.tagline} onChange={(v) => setIdentity('tagline', v)} />
-        </FieldGrid>
-      </Accordion>
+        </div>
+      </BuilderSection>
 
-      <Accordion title="CTA buttons">
+      <BuilderSection sectionId="cta" title="CTA buttons">
         <div className="mb-3 grid gap-2 sm:grid-cols-2">
           <label className="text-xs text-ctp-subtext0">
             Direction
@@ -89,45 +91,82 @@ export function ContentEditor({ brand, state, onChange }: ContentEditorProps) {
             <Field label="URL" value={btn.url} onChange={(v) => { const buttons = [...state.cta.buttons]; buttons[i] = { ...btn, url: v }; patchCta(buttons) }} />
           </div>
         ))}
-      </Accordion>
+      </BuilderSection>
 
-      <Accordion title="Campaign banner">
+      <BuilderSection sectionId="banner" title="Campaign banner">
         <label className="block">
           <span className="mb-1 block text-xs text-ctp-subtext0">Banner</span>
-          <select className={inputClass} value={state.banner.bannerId} onChange={(e) => {
-            const id = e.target.value
-            const banner = brand.banners.find((b) => b.id === id)
-            onChange({
-              ...state,
-              banner: { ...state.banner, bannerId: id, url: id === NO_BANNER_ID ? '' : banner?.defaultUrl ?? state.banner.url },
-            })
-          }}>
+          <select
+            className={inputClass}
+            value={state.banner.bannerId}
+            onChange={(e) => {
+              const id = e.target.value
+              const banner = brand.banners.find((b) => b.id === id)
+              onChange({
+                ...state,
+                banner: {
+                  ...state.banner,
+                  bannerId: id,
+                  url: id === NO_BANNER_ID ? '' : banner?.defaultUrl ?? state.banner.url,
+                  imageAlt: banner?.alt ?? state.banner.imageAlt,
+                },
+              })
+            }}
+          >
             <option value={NO_BANNER_ID}>No banner</option>
+            <option value={CUSTOM_BANNER_ID}>Custom image URL</option>
             {brand.banners.map((b) => (
-              <option key={b.id} value={b.id}>{b.label}</option>
+              <option key={b.id} value={b.id}>
+                {b.label}
+              </option>
             ))}
           </select>
         </label>
-        {state.banner.bannerId !== NO_BANNER_ID && (
+        {bannerActive && (
           <>
+            <Field
+              label="Image alt text"
+              value={state.banner.imageAlt}
+              onChange={(v) => onChange({ ...state, banner: { ...state.banner, imageAlt: v } })}
+            />
+            {state.banner.bannerId === CUSTOM_BANNER_ID && (
+              <>
+                <Field
+                  label="Image URL (PNG, GIF, …)"
+                  value={state.banner.customImageUrl}
+                  onChange={(v) => onChange({ ...state, banner: { ...state.banner, customImageUrl: v } })}
+                />
+                <label className="mt-2 block text-xs text-ctp-subtext0">
+                  Display width: {state.banner.customWidthPx}px
+                  <input
+                    type="range"
+                    min={200}
+                    max={600}
+                    value={state.banner.customWidthPx}
+                    onChange={(e) =>
+                      onChange({
+                        ...state,
+                        banner: { ...state.banner, customWidthPx: Number(e.target.value) },
+                      })
+                    }
+                    className="w-full"
+                  />
+                </label>
+              </>
+            )}
             <Field label="Destination URL" value={state.banner.url} onChange={(v) => onChange({ ...state, banner: { ...state.banner, url: v } })} />
             <label className="mt-2 flex items-center gap-2 text-sm text-ctp-text">
-              <input type="checkbox" checked={state.banner.appendUtm} onChange={(e) => onChange({ ...state, banner: { ...state.banner, appendUtm: e.target.checked } })} />
+              <input
+                type="checkbox"
+                checked={state.banner.appendUtm}
+                onChange={(e) => onChange({ ...state, banner: { ...state.banner, appendUtm: e.target.checked } })}
+              />
               Append UTM parameters
             </label>
           </>
         )}
-      </Accordion>
+      </BuilderSection>
     </div>
-  )
-}
-
-function Accordion({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <details className="rounded-lg border border-ctp-surface0 bg-ctp-base open:shadow-sm" open>
-      <summary className="cursor-pointer list-none px-3 py-2 text-sm font-medium text-ctp-text [&::-webkit-details-marker]:hidden">{title}</summary>
-      <div className="border-t border-ctp-surface0 px-3 py-3">{children}</div>
-    </details>
   )
 }
 
@@ -138,8 +177,4 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
       <input className={inputClass} value={value} onChange={(e) => onChange(e.target.value)} />
     </label>
   )
-}
-
-function FieldGrid({ children }: { children: ReactNode }) {
-  return <div className="grid gap-3 sm:grid-cols-2">{children}</div>
 }

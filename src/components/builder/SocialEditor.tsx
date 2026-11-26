@@ -1,4 +1,5 @@
 import type { SignatureFormState } from '../../types/signature'
+import { BuilderSection } from './BuilderSection'
 
 const inputClass =
   'w-full rounded-md border border-ctp-surface1 bg-ctp-mantle px-3 py-2 text-sm text-ctp-text'
@@ -13,9 +14,8 @@ interface Props {
 export function SocialEditor({ state, onChange }: Props) {
   const { social } = state
   return (
-    <details className="rounded-lg border border-ctp-surface0 bg-ctp-base open:shadow-sm" open>
-      <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ctp-text">Social links</summary>
-      <div className="space-y-2 border-t border-ctp-surface0 px-3 py-3">
+    <BuilderSection sectionId="social" title="Social links">
+      <div className="space-y-2">
         <FieldSelect
           label="Display mode"
           value={social.displayMode}
@@ -88,7 +88,7 @@ export function SocialEditor({ state, onChange }: Props) {
           onUrl={(url) => onChange({ ...state, social: { ...social, websiteGlobe: { ...social.websiteGlobe, url } } })}
         />
       </div>
-    </details>
+    </BuilderSection>
   )
 }
 

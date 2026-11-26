@@ -1,5 +1,6 @@
 import type { BrandPalette } from '../../types/brand'
 import type { PaletteOverride } from '../../types/signature'
+import { BuilderSection } from './BuilderSection'
 
 const FIELDS: { key: keyof BrandPalette; label: string }[] = [
   { key: 'primary', label: 'Primary' },
@@ -19,11 +20,8 @@ interface AdminOverrideProps {
 
 export function AdminOverride({ value, defaults, onChange }: AdminOverrideProps) {
   return (
-    <details className="rounded-lg border border-dashed border-ctp-surface1 bg-ctp-base">
-      <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ctp-text">
-        Brand admin override (testing)
-      </summary>
-      <div className="space-y-3 border-t border-ctp-surface0 px-3 py-3">
+    <BuilderSection sectionId="admin-override" title="Brand admin override (testing)" className="border-dashed border-ctp-surface1">
+      <div className="space-y-3">
         <label className="flex items-center gap-2 text-sm text-ctp-text">
           <input
             type="checkbox"
@@ -52,6 +50,6 @@ export function AdminOverride({ value, defaults, onChange }: AdminOverrideProps)
           ))}
         </div>
       </div>
-    </details>
+    </BuilderSection>
   )
 }

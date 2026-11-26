@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useMemo, useState } from 'react'
 import { BookOpen, Copy, FileCode2, Moon, Redo2, RotateCcw, Share2, Sun, Undo2 } from 'lucide-react'
 import { getBrandById } from './config/brands'
 import { compileSignatureHtml, getDefaultAssetBaseUrl } from './compiler/compileSignature'
@@ -29,6 +29,11 @@ import { TemplatePicker } from './components/builder/TemplatePicker'
 import { PreviewPanel } from './components/preview/PreviewPanel'
 import { PreviewStats } from './components/preview/PreviewStats'
 import { Toast } from './components/ui/Toast'
+import { Tooltip, TooltipButton } from './components/ui/Tooltip'
+import { BuilderSection } from './components/builder/BuilderSection'
+import { BuilderPanelToolbar } from './components/builder/BuilderPanelToolbar'
+import { BuilderSectionsProvider } from './context/BuilderSectionsContext'
+import type { PreviewRenderingPreset } from './lib/previewRenderingPresets'
 
 function App() {
   const { state, setState, setBrand, resetToBrandDefaults, undo, redo } = useSignatureState()
@@ -37,7 +42,7 @@ function App() {
   const [toast, setToast] = useState<string | null>(null)
   const [guideOpen, setGuideOpen] = useState(false)
   const [widthMode, setWidthMode] = useState<'desktop' | 'mobile'>('desktop')
-  const [darkSurround, setDarkSurround] = useState(false)
+  const [renderingPreset, setRenderingPreset] = useState<PreviewRenderingPreset>('unchangedLight')
 
   const compiled = useMemo(() => {
     return compileSignatureHtml(state, brand, { assetBaseUrl: getDefaultAssetBaseUrl() })
@@ -62,20 +67,80 @@ function App() {
 
   return (
     <div className="min-h-screen bg-ctp-base text-ctp-text">
-      <header className="flex flex-wrap items-center gap-3 border-b border-ctp-surface0 bg-ctp-mantle px-4 py-4 sm:px-6">
-        <div className="flex-1">
-          <h1 className="text-xl font-semibold tracking-tight">UXi SignOff</h1>
-          <p className="text-sm text-ctp-subtext0">Multi-brand email signature builder</p>
+      <header className="flex flex-wrap items-center gap-1 border-b border-ctp-surface0 bg-ctp-mantle px-3 py-2 lg:flex-nowrap">
+        <div className="min-w-0 flex-1 shrink">
+          <h1 className="text-lg font-semibold tracking-tight">UXi SignOff</h1>
+          <p className="hidden text-xs text-ctp-subtext0 md:block">Multi-brand email signature builder</p>
         </div>
-        <button type="button" onClick={undo} className="rounded-lg border border-ctp-surface1 p-2" aria-label="Undo"><Undo2 size={16} /></button>
-        <button type="button" onClick={redo} className="rounded-lg border border-ctp-surface1 p-2" aria-label="Redo"><Redo2 size={16} /></button>
-        <button type="button" onClick={toggleTheme} className="rounded-lg border border-ctp-surface1 p-2" aria-label="Toggle theme">
-          {theme === 'latte' ? <Moon size={16} /> : <Sun size={16} />}
-        </button>
+        <div className="flex shrink-0 items-center gap-0.5">
+          <Tooltip content="Undo last change">
+            <button type="button" onClick={undo} aria-label="Undo last change" className="rounded-md border border-ctp-surface1 p-1.5">
+              <Undo2 size={14} />
+            </button>
+          </Tooltip>
+          <Tooltip content="Redo">
+            <button type="button" onClick={redo} aria-label="Redo" className="rounded-md border border-ctp-surface1 p-1.5">
+              <Redo2 size={14} />
+            </button>
+          </Tooltip>
+          <Tooltip content={theme === 'latte' ? 'Switch to dark theme' : 'Switch to light theme'}>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="rounded-md border border-ctp-surface1 p-1.5"
+            >
+              {theme === 'latte' ? <Moon size={14} /> : <Sun size={14} />}
+            </button>
+          </Tooltip>
+        </div>
+        <div className="flex w-full shrink-0 flex-wrap items-center justify-end gap-0.5 lg:ml-1 lg:w-auto lg:flex-nowrap xl:border-l xl:border-ctp-surface0 xl:pl-2">
+          <TooltipButton
+            content="Copy rich HTML signature for pasting into email clients"
+            primary
+            onClick={async () => {
+              const result = await copyRichHtml(compiled.html, compiled.plainText)
+              if (result === 'rich') showToast('Rich signature copied — paste into your email client.')
+              else if (result === 'plain') showToast('Copied plain text only — try Chrome or Copy Raw HTML.')
+              else showToast('Copy failed.')
+            }}
+          >
+            <Copy size={14} />
+            <span className="hidden xl:inline">Copy</span>
+          </TooltipButton>
+          <TooltipButton
+            content="Copy table HTML source for developers"
+            onClick={async () => {
+              showToast((await copyRawHtml(compiled.html)) ? 'HTML source copied.' : 'Copy failed.')
+            }}
+          >
+            <FileCode2 size={14} />
+            <span className="hidden xl:inline">HTML</span>
+          </TooltipButton>
+          <TooltipButton content="Copy shareable link (layout only, no personal data)" onClick={copyShareLink}>
+            <Share2 size={14} />
+            <span className="hidden xl:inline">Share</span>
+          </TooltipButton>
+          <TooltipButton
+            content="Reset all fields to current brand defaults"
+            onClick={() => {
+              if (window.confirm('Reset all fields to this brand’s defaults?')) resetToBrandDefaults()
+            }}
+          >
+            <RotateCcw size={14} />
+            <span className="hidden xl:inline">Reset</span>
+          </TooltipButton>
+          <TooltipButton content="How to paste signatures in Outlook, Gmail, and more" onClick={() => setGuideOpen(true)}>
+            <BookOpen size={14} />
+            <span className="hidden xl:inline">Guide</span>
+          </TooltipButton>
+        </div>
       </header>
 
-      <main className="grid gap-6 p-4 lg:grid-cols-2 lg:p-6">
-        <section className="space-y-5 rounded-xl border border-ctp-surface0 bg-ctp-mantle p-4 shadow-sm lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+      <main className="grid gap-3 p-3 lg:grid-cols-2 lg:gap-4 lg:p-4">
+        <section className="space-y-2 rounded-xl border border-ctp-surface0 bg-ctp-mantle p-2 shadow-sm lg:p-3">
+          <BuilderSectionsProvider>
+          <BuilderPanelToolbar />
           <BrandSelector brandId={state.brandId} onChange={onBrandChange} />
           <TemplatePicker state={state} onChange={setState} />
           <LayoutSpacingPanel state={state} onChange={setState} />
@@ -87,29 +152,19 @@ function App() {
           <LegalEditor brand={brand} state={state} onChange={setState} />
           <AdminOverride value={state.paletteOverride} defaults={brand.palette} onChange={(paletteOverride) => setState({ ...state, paletteOverride })} />
           <ProfilesBar state={state} onLoad={setState} showToast={showToast} />
-
-          <div className="flex flex-wrap gap-2 border-t border-ctp-surface0 pt-4">
-            <ActionButton icon={<Copy size={16} />} label="Copy Signature" primary onClick={async () => {
-              const result = await copyRichHtml(compiled.html, compiled.plainText)
-              if (result === 'rich') showToast('Rich signature copied — paste into your email client.')
-              else if (result === 'plain') showToast('Copied plain text only — try Chrome or Copy Raw HTML.')
-              else showToast('Copy failed.')
-            }} />
-            <ActionButton icon={<FileCode2 size={16} />} label="Copy Raw HTML" onClick={async () => {
-              showToast((await copyRawHtml(compiled.html)) ? 'HTML source copied.' : 'Copy failed.')
-            }} />
-            <ActionButton icon={<Share2 size={16} />} label="Share template link" onClick={copyShareLink} />
-            <ActionButton icon={<RotateCcw size={16} />} label="Reset to Brand Defaults" onClick={() => {
-              if (window.confirm('Reset all fields to this brand’s defaults?')) resetToBrandDefaults()
-            }} />
-            <ActionButton icon={<BookOpen size={16} />} label="Paste guide" onClick={() => setGuideOpen(true)} />
-          </div>
+          </BuilderSectionsProvider>
         </section>
 
-        <section className="lg:sticky lg:top-4 lg:self-start">
+        <section className="self-start lg:sticky lg:top-2">
           <h2 className="mb-2 text-xs font-medium uppercase tracking-wide text-ctp-subtext0">Live preview</h2>
           <PreviewStats html={compiled.html} state={state} />
-          <PreviewPanel html={compiled.html} widthMode={widthMode} darkSurround={darkSurround} onWidthModeChange={setWidthMode} onDarkSurroundChange={setDarkSurround} />
+          <PreviewPanel
+            html={compiled.html}
+            widthMode={widthMode}
+            renderingPreset={renderingPreset}
+            onWidthModeChange={setWidthMode}
+            onRenderingPresetChange={setRenderingPreset}
+          />
         </section>
       </main>
 
@@ -123,8 +178,8 @@ function ProfilesBar({ state, onLoad, showToast }: { state: SignatureFormState; 
   const [name, setName] = useState('')
   const profiles = listProfiles()
   return (
-    <div className="rounded-lg border border-dashed border-ctp-surface1 p-3 text-sm">
-      <p className="mb-2 font-medium">Saved profiles</p>
+    <BuilderSection sectionId="profiles" title="Saved profiles">
+      <div className="text-sm">
       <div className="flex gap-2">
         <input className="flex-1 rounded border border-ctp-surface1 bg-ctp-base px-2 py-1" value={name} placeholder="Profile name" onChange={(e) => setName(e.target.value)} />
         <button type="button" className="rounded bg-ctp-accent px-2 py-1 text-white" onClick={() => { if (name.trim()) { saveProfile(name, state); showToast('Profile saved'); setName('') } }}>Save</button>
@@ -173,15 +228,8 @@ function ProfilesBar({ state, onLoad, showToast }: { state: SignatureFormState; 
           </li>
         ))}
       </ul>
-    </div>
-  )
-}
-
-function ActionButton({ icon, label, onClick, primary }: { icon: ReactNode; label: string; onClick: () => void; primary?: boolean }) {
-  return (
-    <button type="button" onClick={onClick} className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ${primary ? 'bg-ctp-accent text-white' : 'border border-ctp-surface1 bg-ctp-base'}`}>
-      {icon}{label}
-    </button>
+      </div>
+    </BuilderSection>
   )
 }
 

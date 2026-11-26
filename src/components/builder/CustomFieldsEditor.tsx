@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { CUSTOM_FIELD_PRESETS, createPresetField } from '../../config/customFieldPresets'
 import type { CustomField, SignatureFormState } from '../../types/signature'
+import { BuilderSection } from './BuilderSection'
 
 const inputClass =
   'w-full rounded-md border border-ctp-surface1 bg-ctp-mantle px-3 py-2 text-sm text-ctp-text'
@@ -32,9 +33,8 @@ export function CustomFieldsEditor({ state, onChange }: Props) {
   }
 
   return (
-    <details className="rounded-lg border border-ctp-surface0 bg-ctp-base" open>
-      <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-ctp-text">Custom fields</summary>
-      <div className="space-y-2 border-t border-ctp-surface0 px-3 py-3">
+    <BuilderSection sectionId="custom-fields" title="Custom fields">
+      <div className="space-y-2">
         <div className="flex flex-wrap gap-1">
           {CUSTOM_FIELD_PRESETS.map((p) => (
             <button
@@ -78,7 +78,7 @@ export function CustomFieldsEditor({ state, onChange }: Props) {
           </div>
         ))}
       </div>
-    </details>
+    </BuilderSection>
   )
 }
 
