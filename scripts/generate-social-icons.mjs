@@ -1,6 +1,6 @@
 /**
  * Brand glyphs from Simple Icons (CC0) + LinkedIn path (removed from upstream SI).
- * Output: 48px PNG under public/assets/icons/
+ * Variants: brand (official colors) | monochrome (grey B&W).
  */
 import { mkdir, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
@@ -14,6 +14,7 @@ const SIZE = 48
 const INNER = 40
 const SCALE = INNER / 24
 const OFFSET = (SIZE - INNER) / 2
+const MONOCHROME = '5C6370'
 
 /** @type {Record<string, { hex: string, path: string }>} */
 const ICONS = {
@@ -27,7 +28,7 @@ const ICONS = {
   x: pick(SimpleIcons.siX),
   youtube: pick(SimpleIcons.siYoutube),
   tiktok: pick(SimpleIcons.siTiktok),
-  website: pick(SimpleIcons.siWikipedia),
+  website: pick(SimpleIcons.siGoogleearth),
 }
 
 /** @param {import('simple-icons').SimpleIcon | undefined} icon */
@@ -36,19 +37,10 @@ function pick(icon) {
   return { hex: icon.hex, path: icon.path }
 }
 
-function svgMarkup(path, hex, variant) {
-  const brand = `#${hex}`
-  if (variant === 'circle-filled') {
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">
-  <circle cx="24" cy="24" r="22" fill="${brand}"/>
-  <g transform="translate(${OFFSET},${OFFSET}) scale(${SCALE})">
-    <path d="${path}" fill="#ffffff"/>
-  </g>
-</svg>`
-  }
+function svgMarkup(path, fill) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}">
   <g transform="translate(${OFFSET},${OFFSET}) scale(${SCALE})">
-    <path d="${path}" fill="${brand}"/>
+    <path d="${path}" fill="${fill}"/>
   </g>
 </svg>`
 }
@@ -58,13 +50,13 @@ function toPng(svg) {
   return resvg.render().asPng()
 }
 
-for (const variant of ['neutral', 'circle-filled']) {
+for (const variant of ['brand', 'monochrome']) {
   const dir = join(root, variant)
   await mkdir(dir, { recursive: true })
   for (const [name, icon] of Object.entries(ICONS)) {
-    const svg = svgMarkup(icon.path, icon.hex, variant)
-    await writeFile(join(dir, `${name}.png`), toPng(svg))
+    const fill = variant === 'monochrome' ? `#${MONOCHROME}` : `#${icon.hex}`
+    await writeFile(join(dir, `${name}.png`), toPng(svgMarkup(icon.path, fill)))
   }
 }
 
-console.log('Official brand PNGs written to public/assets/icons/')
+console.log('Social icon PNGs written to public/assets/icons/{brand,monochrome}/')

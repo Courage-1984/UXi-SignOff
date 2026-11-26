@@ -38,7 +38,7 @@ npm run import:inspiration
 2. Brand: `ref-affiliate`
 3. Enable headshot; URL e.g. `/assets/qa/headshot-square.png` or your photo
 4. Banner: **Affiliate CTA**
-5. Social: icons, circle-filled (preset)
+5. Social: icons, brand colors (preset)
 
 ### Logo + promo stack
 

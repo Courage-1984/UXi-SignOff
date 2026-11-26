@@ -36,7 +36,7 @@ const STANDARD_BLOCKS: Record<BlockId, boolean> = {
 
 const DEFAULT_SOCIAL_PRESENTATION: Pick<SocialFields, 'displayMode' | 'iconVariant' | 'separator' | 'layout'> = {
   displayMode: 'icons',
-  iconVariant: 'neutral',
+  iconVariant: 'brand',
   separator: 'pipe',
   layout: { direction: 'row', align: 'left' },
 }
@@ -140,7 +140,7 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplatePreset> = {
     blocks: { identity: true, cta: false, social: true, banner: true, legal: false },
     headshot: { enabled: true, sizePx: 72 },
     banner: 'first',
-    social: { displayMode: 'icons', iconVariant: 'circle-filled', layout: { direction: 'row', align: 'left' } },
+    social: { displayMode: 'icons', iconVariant: 'brand', layout: { direction: 'row', align: 'left' } },
   },
   'logo-promo-stack': {
     layout: { primaryFlow: 'column', blockAlign: 'top' },
@@ -174,7 +174,7 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplatePreset> = {
     blocks: { identity: true, cta: false, social: true, banner: false, legal: false },
     headshot: { enabled: false },
     banner: 'off',
-    social: { displayMode: 'icons', iconVariant: 'neutral', layout: { direction: 'row', align: 'left' } },
+    social: { displayMode: 'icons', iconVariant: 'monochrome', layout: { direction: 'row', align: 'left' } },
     logoRender: { maxWidthPx: 100 },
   },
 }

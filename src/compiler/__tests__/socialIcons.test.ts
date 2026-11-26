@@ -14,10 +14,12 @@ describe('social icon assets', () => {
   })
 
   it('icons are distinct recognizable PNGs, not flat placeholders', () => {
-    const linkedin = readFileSync(join(publicRoot, 'assets/icons/neutral/linkedin.png'))
-    const xIcon = readFileSync(join(publicRoot, 'assets/icons/neutral/x.png'))
+    const linkedin = readFileSync(join(publicRoot, 'assets/icons/brand/linkedin.png'))
+    const xIcon = readFileSync(join(publicRoot, 'assets/icons/brand/x.png'))
+    const linkedinMono = readFileSync(join(publicRoot, 'assets/icons/monochrome/linkedin.png'))
     expect(linkedin.byteLength).toBeGreaterThan(400)
     expect(xIcon.byteLength).toBeGreaterThan(400)
     expect(linkedin.equals(xIcon)).toBe(false)
+    expect(linkedinMono.equals(linkedin)).toBe(false)
   })
 })

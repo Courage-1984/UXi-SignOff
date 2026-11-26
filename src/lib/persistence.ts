@@ -1,4 +1,5 @@
 import { createDefaultState, NO_BANNER_ID } from '../config/defaults'
+import { normalizeSocialIconVariant } from '../config/socialIconVariants'
 import { getBrandById } from '../config/brands'
 import { getTemplatePreset, isKnownTemplateId } from '../config/templatePresets'
 import type { SignatureFormState, TemplateId } from '../types/signature'
@@ -61,7 +62,12 @@ function hydratePartial(saved: Partial<SignatureFormState>, brandId: string): Si
     ...saved,
     layout: { ...preset.layout, ...saved.layout },
     spacing: { ...base.spacing, ...saved.spacing, divider: { ...base.spacing.divider, ...saved.spacing?.divider } },
-    social: { ...base.social, ...saved.social, layout: { ...base.social.layout, ...saved.social?.layout } },
+    social: {
+      ...base.social,
+      ...saved.social,
+      iconVariant: normalizeSocialIconVariant(saved.social?.iconVariant ?? base.social.iconVariant),
+      layout: { ...base.social.layout, ...saved.social?.layout },
+    },
     cta: { ...base.cta, ...saved.cta, layout: { ...base.cta.layout, ...saved.cta?.layout } },
     legal: { ...base.legal, ...saved.legal },
     logoRender: { ...base.logoRender, ...saved.logoRender },

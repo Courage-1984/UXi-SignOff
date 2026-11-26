@@ -37,5 +37,5 @@ export function iconVariantPaths(variant: SocialIconVariant): string {
 
 export const SOCIAL_ICON_CATALOG: Array<{ variant: SocialIconVariant; network: SocialNetworkId }> =
   SOCIAL_NETWORKS.flatMap((network) =>
-    (['neutral', 'circle-filled'] as SocialIconVariant[]).map((variant) => ({ variant, network })),
+    (['brand', 'monochrome'] as SocialIconVariant[]).map((variant) => ({ variant, network })),
   )

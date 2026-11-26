@@ -1,4 +1,5 @@
 import type { SignatureFormState } from '../../types/signature'
+import { SOCIAL_ICON_VARIANTS } from '../../config/socialIconVariants'
 import { BuilderSection } from './BuilderSection'
 
 const inputClass =
@@ -29,10 +30,7 @@ export function SocialEditor({ state, onChange }: Props) {
         <FieldSelect
           label="Icon style"
           value={social.iconVariant}
-          options={[
-            ['neutral', 'Neutral'],
-            ['circle-filled', 'Circle filled'],
-          ]}
+          options={SOCIAL_ICON_VARIANTS.map((v) => [v.id, v.label] as [string, string])}
           onChange={(iconVariant) => onChange({ ...state, social: { ...social, iconVariant: iconVariant as typeof social.iconVariant } })}
         />
         <div className="grid gap-2 sm:grid-cols-2">

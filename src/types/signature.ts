@@ -22,7 +22,7 @@ export type TextDensity = 'tight' | 'normal' | 'relaxed'
 export type LogoBackingMode = 'none' | 'white-card' | 'rounded-box' | 'brand-default'
 export type SocialDisplayMode = 'icons' | 'text' | 'icon-label'
 export type SocialSeparator = 'pipe' | 'bullet' | 'slash'
-export type SocialIconVariant = 'neutral' | 'circle-filled'
+export type SocialIconVariant = 'brand' | 'monochrome'
 export type CustomFieldType = 'text' | 'url' | 'phone' | 'email'
 
 export interface BlockConfig {

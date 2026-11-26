@@ -30,7 +30,7 @@ function defaultSocialFields(brand: BrandConfig) {
     websiteGlobe: { enabled: true, url: brand.defaults.website },
     displayMode: 'icons' as const,
     separator: 'pipe' as const,
-    iconVariant: 'neutral' as const,
+    iconVariant: 'brand' as const,
     layout: { direction: 'row' as const, align: 'left' as const },
   }
 }
