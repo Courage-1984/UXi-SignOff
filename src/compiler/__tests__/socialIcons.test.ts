@@ -16,8 +16,8 @@ describe('social icon assets', () => {
   it('icons are distinct recognizable PNGs, not flat placeholders', () => {
     const linkedin = readFileSync(join(publicRoot, 'assets/icons/neutral/linkedin.png'))
     const xIcon = readFileSync(join(publicRoot, 'assets/icons/neutral/x.png'))
-    expect(linkedin.byteLength).toBeGreaterThan(150)
-    expect(xIcon.byteLength).toBeGreaterThan(150)
+    expect(linkedin.byteLength).toBeGreaterThan(400)
+    expect(xIcon.byteLength).toBeGreaterThan(400)
     expect(linkedin.equals(xIcon)).toBe(false)
   })
 })
